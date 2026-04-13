@@ -5,5 +5,6 @@
 !nvim/
 !nvim/**
 
-# Track this file
+# Track these files
 !.gitignore
+!README.md
