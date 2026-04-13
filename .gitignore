@@ -1,0 +1,9 @@
+# Ignore everything
+*
+
+# Track nvim folder
+!nvim/
+!nvim/**
+
+# Track this file
+!.gitignore
