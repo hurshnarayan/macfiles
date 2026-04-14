@@ -42,6 +42,10 @@
       "src": "https://github.com/ThePrimeagen/harpoon",
       "version": "'harpoon2'"
     },
+    "jellybeans.vim": {
+      "rev": "ef83bf4dc8b3eacffc97bf5c96ab2581b415c9fa",
+      "src": "https://github.com/nanotech/jellybeans.vim"
+    },
     "mason-lspconfig.nvim": {
       "rev": "0a3b42c3e503df87aef6d6513e13148381495c3a",
       "src": "https://github.com/mason-org/mason-lspconfig.nvim"
@@ -118,6 +122,10 @@
     "ts-comments.nvim": {
       "rev": "123a9fb12e7229342f807ec9e6de478b1102b041",
       "src": "https://github.com/folke/ts-comments.nvim"
+    },
+    "ultisnips": {
+      "rev": "347567792219f089d9d3091bab49ce94f76fb10f",
+      "src": "https://github.com/sirver/ultisnips"
     },
     "which-key.nvim": {
       "rev": "3aab2147e74890957785941f0c1ad87d0a44c15a",

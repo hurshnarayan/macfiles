@@ -43,6 +43,9 @@ require("blink.cmp").setup({
     ["<C-k>"] = { "select_prev", "fallback" },  -- move up in menu
     ["<C-j>"] = { "select_next", "fallback" },  -- move down in menu
     ["<CR>"] = { "select_and_accept", "fallback" },  -- accept selection
+
+    -- UltiSnips Tab integration lives in ftplugin/cpp.lua (buffer-local)
+    -- so it takes precedence over blink's buffer-local Tab mapping.
   },
 
   -- Fuzzy matching settings

@@ -111,7 +111,18 @@ keymap("v", "<leader>/", "gc", { remap = true, desc = "Comment selection" })
 vim.cmd([[:amenu 10.100 mousemenu.Goto\ Definition <cmd>lua vim.lsp.buf.definition()<CR>]])
 vim.cmd([[:amenu 10.110 mousemenu.References <cmd>lua vim.lsp.buf.references()<CR>]])
 vim.keymap.set("n", "<RightMouse>", "<cmd>:popup mousemenu<CR>")
-vim.keymap.set("n", "<Tab>", "<cmd>:popup mousemenu<CR>")
+
+
+-- =============================================================================
+-- PORTED FROM MACVIM
+-- =============================================================================
+-- <Tab> (normal mode) = jump to matching bracket, paren, brace, if/else/endif.
+-- Built-in behavior of % — remapped to Tab because it's one keystroke and
+-- your MacVim setup used this.
+keymap("n", "<Tab>", "%", { desc = "Jump to matching bracket", silent = true })
+
+-- <Leader>a = select the entire file (ggVG).
+keymap("n", "<leader>a", "ggVG", { desc = "Select all" })
 
 
 -- =============================================================================

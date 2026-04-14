@@ -123,6 +123,13 @@ vim.pack.add({
   "https://github.com/kevinhwang91/nvim-bqf",
   -- Preview CSS/Tailwind colors inline
   "https://github.com/catgoose/nvim-colorizer.lua",
+
+  -- CPP COMPETITIVE PROGRAMMING
+  -- Jellybeans colorscheme (matches MacVim setup)
+  "https://github.com/nanotech/jellybeans.vim",
+  -- UltiSnips: snippet engine used by the pastebin cpp.snippets file
+  -- (requires pynvim: pip3 install --user --break-system-packages pynvim)
+  "https://github.com/sirver/ultisnips",
 })
 
 
