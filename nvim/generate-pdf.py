@@ -640,12 +640,26 @@ def build_pdf():
     story.append(Paragraph("Actions", style_subsection))
     story.append(make_shortcut_table([
         ("Space ca", "Code actions (auto-fix imports, extract function, etc.). "
-                     "Select an action from the popup menu with Enter."),
+                     "Opens a popup menu of suggested fixes. Works in Visual mode "
+                     "to scope actions to the selection."),
         ("Space lr", "Smart rename (rename a symbol everywhere it's used). "
                      "Type the new name, press Enter. Way better than find-replace."),
         ("Space lf", "Format file (or format selection in Visual mode). "
                      "Uses conform.nvim with your configured formatter."),
     ]))
+
+    story.append(Paragraph("Inside the Code Actions popup (Space ca)", style_subsection))
+    story.append(make_shortcut_table([
+        ("j / k  or  Down / Up", "Move through the list of suggested fixes"),
+        ("Enter", "Apply the highlighted fix"),
+        ("1 / 2 / 3 ...", "Apply that numbered fix directly (no Enter needed)"),
+        ("Esc  or  Ctrl+c", "Cancel without applying anything"),
+    ]))
+    story.append(Paragraph(
+        "Tip: the fix that looks most obvious is usually at position 1. "
+        "If the suggestion matches what you wanted, just press <b>1</b> and move on.",
+        style_note
+    ))
 
     story.append(Paragraph("Dismissing Popups & Floating Windows", style_subsection))
     story.append(Paragraph(
@@ -759,20 +773,53 @@ def build_pdf():
     story.append(Paragraph("7. Diagnostics & Linting", style_section))
     story.append(Paragraph(
         "Diagnostics are errors, warnings, and hints from LSP servers and linters. "
-        "They appear as icons in the left gutter and can be viewed in floating popups.",
+        "<b>Inline messages are OFF in this config</b> (virtual_text = false in "
+        "lua/config/lsp.lua). You'll see a gutter icon on problem lines and a squiggly "
+        "underline, but no trailing text cluttering your code. Pull the message up "
+        "on demand with the shortcuts below.",
         style_body
     ))
 
+    story.append(Paragraph("Show / navigate diagnostics", style_subsection))
     story.append(make_shortcut_table([
-        ("gl", "Show diagnostic for current line (floating popup). "
-               "Press Esc or move cursor to dismiss."),
-        ("Space dj", "Jump to next diagnostic (error/warning)"),
-        ("Space dk", "Jump to previous diagnostic"),
-        ("Space D", "Show all diagnostics in current buffer (via fzf)"),
+        ("gl", "Show the diagnostic for the current line in a floating popup"),
+        ("Space dj", "Jump to NEXT diagnostic (auto-opens the float at the landing)"),
+        ("Space dk", "Jump to PREVIOUS diagnostic (auto-opens the float)"),
+        ("Space D", "Show all diagnostics in the current buffer (fzf picker)"),
         ("Space fd", "Same as Space D (buffer diagnostics via fzf)"),
-        ("Space fD", "Show diagnostics across entire workspace"),
-        ("Space ll", "Manually trigger linting for current file"),
+        ("Space fD", "Show diagnostics across the entire workspace (fzf picker)"),
+        ("K", "Hover docs for the symbol under the cursor (not a diagnostic, but related)"),
+        ("Space ca", "Pull up code actions to FIX the diagnostic on this line"),
+        ("Space ll", "Manually trigger linting for the current file"),
     ]))
+
+    story.append(Paragraph("Inside the float popup (gl / auto-float)", style_subsection))
+    story.append(make_shortcut_table([
+        ("q  or  Esc", "Dismiss the float"),
+        ("Move cursor", "Also dismisses the float"),
+        ("Ctrl+d  /  Ctrl+u", "Scroll down / up inside the popup (for long messages)"),
+    ]))
+
+    story.append(Paragraph("Inside the diagnostics picker (Space D / fd / fD)", style_subsection))
+    story.append(make_shortcut_table([
+        ("Type text", "Fuzzy filter the list"),
+        ("Ctrl+j / Ctrl+k", "Move down / up"),
+        ("Enter", "Jump to the selected diagnostic"),
+        ("Ctrl+q", "Send all filtered results to the quickfix list"),
+        ("Esc", "Close the picker"),
+    ]))
+
+    story.append(Spacer(1, 3*mm))
+    story.append(Paragraph("Typical flow: spot a problem, fix it", style_subsection))
+    story.append(Paragraph(
+        "1.&nbsp;&nbsp;A gutter icon appears on the left ( red E for error, yellow W for warning ).<br/>"
+        "2.&nbsp;&nbsp;Press <b>Space dj</b> to jump to it. The float pops up automatically with the full message.<br/>"
+        "3.&nbsp;&nbsp;Prefer to stay put? Press <b>gl</b> instead to see the message for the current line.<br/>"
+        "4.&nbsp;&nbsp;Press <b>Space ca</b> to open the code actions menu.<br/>"
+        "5.&nbsp;&nbsp;Hit <b>1</b> (or <b>j</b> + <b>Enter</b>) to apply the suggested fix.<br/>"
+        "6.&nbsp;&nbsp;Done. Move to the next problem with <b>Space dj</b> again.",
+        style_body
+    ))
 
     story.append(Spacer(1, 3*mm))
     story.append(Paragraph("Gutter Signs", style_subsection))
@@ -783,6 +830,38 @@ def build_pdf():
         "&nbsp;&nbsp;Hint icon (blue) = suggestion for improvement<br/>"
         "&nbsp;&nbsp;Info icon (cyan) = informational message",
         style_body
+    ))
+
+    story.append(Spacer(1, 3*mm))
+    story.append(Paragraph("Display config (lua/config/lsp.lua)", style_subsection))
+    story.append(Paragraph(
+        "vim.diagnostic.config({ ... }) controls HOW diagnostics are shown. "
+        "Flip any of these knobs and save, then <b>:source %</b> or restart Neovim.",
+        style_body
+    ))
+    story.append(make_shortcut_table([
+        ("virtual_text", "Inline trailing text on the same line. Currently FALSE."),
+        ("virtual_lines", "Draws the diagnostic on a new line BELOW. Currently false. "
+                          "Try { current_line = true } for a nicer long-message view."),
+        ("signs", "Gutter icons (Error/Warn/Hint/Info)."),
+        ("underline", "Squiggly underline under problem code. Currently true."),
+        ("update_in_insert", "If false, diagnostics pause while you're typing."),
+        ("float", "Styling for the gl popup (border, source, etc.)."),
+    ]))
+
+    story.append(Spacer(1, 3*mm))
+    story.append(Paragraph("Optional: a keymap to toggle inline diagnostics", style_subsection))
+    story.append(Paragraph(
+        "Drop this in lua/config/keymaps.lua if you ever want to flip inline on/off quickly:",
+        style_body
+    ))
+    story.append(Paragraph(
+        'vim.keymap.set("n", "<leader>dv", function()\n'
+        '  local enabled = vim.diagnostic.config().virtual_text\n'
+        '  vim.diagnostic.config({ virtual_text = not enabled })\n'
+        '  vim.notify("Inline diagnostics: " .. (not enabled and "on" or "off"))\n'
+        'end, { desc = "Toggle inline diagnostics" })',
+        style_code
     ))
 
     story.append(Spacer(1, 3*mm))

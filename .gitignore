@@ -5,6 +5,10 @@
 !nvim/
 !nvim/**
 
+!tmux/
+!tmux/**
+
+
 # Track these files
 !.gitignore
 !README.md

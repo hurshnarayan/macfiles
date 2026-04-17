@@ -101,7 +101,7 @@ vim.diagnostic.config({
 
   -- virtual_text shows error messages inline after each line.
   -- Set to false if you find them too noisy (then use gl to check manually).
-  virtual_text = true,
+  virtual_text = false,
 
   -- virtual_lines draws the diagnostic BELOW the line. Also disabled.
   virtual_lines = false,
