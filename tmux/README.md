@@ -11,17 +11,18 @@ Throughout this doc, **`<L>`** means the leader — press `Ctrl+a`, release, the
 ## Table of contents
 
 1. [Install / activate](#1-install--activate)
-2. [Mental model](#2-mental-model)
-3. [Keybindings from this config](#3-keybindings-from-this-config)
-4. [Built-in tmux keybindings (not remapped)](#4-built-in-tmux-keybindings-not-remapped)
-5. [Copy / paste](#5-copy--paste-vi-mode)
-6. [Shell commands (`tmux …`)](#6-shell-commands-tmux-)
-7. [Exit / kill patterns](#7-exit--kill-patterns)
-8. [Companion files: `.tmux-cht-*`](#8-companion-files-tmux-cht-)
-9. [Typical workflow](#9-typical-workflow)
-10. [Running shell commands while editing in nvim](#10-running-shell-commands-while-editing-in-nvim)
-11. [Troubleshooting](#11-troubleshooting)
-12. [Sanity checks](#12-sanity-checks)
+2. [Quick start: starting, listing, attaching, renaming sessions](#2-quick-start-starting-listing-attaching-renaming-sessions)
+3. [Mental model](#3-mental-model)
+4. [Keybindings from this config](#4-keybindings-from-this-config)
+5. [Built-in tmux keybindings (not remapped)](#5-built-in-tmux-keybindings-not-remapped)
+6. [Copy / paste](#6-copy--paste-vi-mode)
+7. [Shell commands (`tmux …`)](#7-shell-commands-tmux-)
+8. [Exit / kill patterns](#8-exit--kill-patterns)
+9. [Companion files: `.tmux-cht-*`](#9-companion-files-tmux-cht-)
+10. [Typical workflow](#10-typical-workflow)
+11. [Running shell commands while editing in nvim](#11-running-shell-commands-while-editing-in-nvim)
+12. [Troubleshooting](#12-troubleshooting)
+13. [Sanity checks](#13-sanity-checks)
 
 ---
 
@@ -78,7 +79,104 @@ Empty env var = defaults apply. Set it (e.g. in `~/.config/fish/config.fish`) on
 
 ---
 
-## 2. Mental model
+## 2. Quick start: starting, listing, attaching, renaming sessions
+
+Everything below runs from a regular shell (outside tmux), except where noted.
+
+### Start a new session
+
+```sh
+tmux                              # simplest — creates unnamed session (numbered 0, 1, 2…)
+tmux new -s work                  # creates a NAMED session called "work" and attaches
+tmux new -s work -d               # creates "work" DETACHED (runs in the background)
+tmux new -s work -c ~/code/foo    # creates "work" starting in ~/code/foo
+tmux new -As work                 # attach if "work" exists, else create it  (my favorite)
+```
+
+`-A` means "attach to existing, or create." Combined with `-s`, it's idempotent — run it every morning without thinking.
+
+### See what's running
+
+```sh
+tmux ls                           # list all sessions. Empty = no tmux server running.
+# example output:
+#   work: 3 windows (created Fri Apr 18 08:12:04 2026)
+#   0: 1 windows (created Fri Apr 18 09:30:11 2026) (attached)
+```
+
+The leading label is the session **name** (or a number for unnamed ones).
+
+### Attach to a session
+
+```sh
+tmux a                            # attach to most recent session
+tmux a -t work                    # attach to "work" specifically
+tmux a -t 0                       # attach to unnamed session "0"
+```
+
+> Rule of thumb: **before running `tmux` to start fresh, run `tmux ls` first.** If something's already there, attach to it instead of creating another one.
+
+### Rename an unnamed (or any) session
+
+Three ways, pick whichever is in front of you.
+
+**1. From inside tmux — single keystroke:**
+```
+<L> $          prompts in the status bar — type the new name, Enter
+```
+
+**2. From inside tmux — command prompt:**
+```
+<L> :                                open prompt
+rename-session my-new-name           renames current session
+```
+
+**3. From the shell — target by old name or number:**
+```sh
+tmux rename-session -t 0 work        # rename unnamed session "0" to "work"
+tmux rename-session -t old new       # rename "old" to "new"
+```
+
+Example flow — you started an unnamed session, decided it's the real thing:
+
+```sh
+tmux                 # starts session "0", attaches
+# …you do some work…
+<L> $                # prompt appears: "(rename-session) 0"
+# type: project-x, hit Enter
+tmux ls              # now shows: project-x: 1 windows (attached)
+```
+
+### Leave a session without killing it
+
+```
+<L> d                # detach — session keeps running, shell returns
+tmux detach          # same thing from inside a pane's shell
+```
+
+Reattach anytime with `tmux a -t <name>`. Session survives terminal close, laptop sleep, SSH drops.
+
+### Kill a session
+
+```sh
+tmux kill-session -t work         # kill "work" by name
+tmux kill-server                  # nuke every session for this user
+```
+Or from inside tmux: `<L> :kill-session`. More ways in [§8 Exit / kill patterns](#8-exit--kill-patterns).
+
+### 30-second muscle memory
+
+```sh
+tmux ls                           # what's running?
+tmux new -As work -c ~/code/foo   # start or attach (idempotent)
+# … work …
+<L> d                             # detach when done
+tmux a -t work                    # resume later
+```
+
+---
+
+## 3. Mental model
 
 ```
 server
@@ -92,7 +190,7 @@ server
 
 ---
 
-## 3. Keybindings from this config
+## 4. Keybindings from this config
 
 ### Session / config
 | Keys | Action |
@@ -137,7 +235,7 @@ Each opens the given path as a tmux session:
 
 ---
 
-## 4. Built-in tmux keybindings (not remapped)
+## 5. Built-in tmux keybindings (not remapped)
 
 ### Windows (tabs)
 | Keys | Action |
@@ -194,7 +292,7 @@ Compare the listing shortcuts:
 
 ---
 
-## 5. Copy / paste (vi mode)
+## 6. Copy / paste (vi mode)
 
 ```
 <L> [         enter copy mode
@@ -210,7 +308,7 @@ Mouse is also on — click to focus a pane, drag to select.
 
 ---
 
-## 6. Shell commands (`tmux …`)
+## 7. Shell commands (`tmux …`)
 
 ### Start / attach / detach
 ```sh
@@ -255,7 +353,7 @@ tmux source-file ~/.config/tmux/tmux.conf       # reload config from CLI
 
 ---
 
-## 7. Exit / kill patterns
+## 8. Exit / kill patterns
 
 ### Exit / detach (keep session running)
 - **From inside tmux:** `<L> d` (or `<L> :` then type `detach`)
@@ -296,7 +394,7 @@ Or inside tmux: `<L> :` then `kill-server`.
 
 ---
 
-## 8. Companion files: `.tmux-cht-*`
+## 9. Companion files: `.tmux-cht-*`
 
 Bound to `<L> i` via Primeagen's `tmux-cht.sh` script (cheat.sh lookup helper). The script reads two files from `$HOME`:
 
@@ -316,7 +414,7 @@ cp ~/.config/tmux_primeagen/.tmux-cht-* ~/
 
 ---
 
-## 9. Typical workflow
+## 10. Typical workflow
 
 ```sh
 # morning: open your work project
@@ -346,7 +444,7 @@ Day-to-day muscle memory: `tmux a`, `<L> c` new tab, `<L> "` split, `<L> h/j/k/l
 
 ---
 
-## 10. Running shell commands while editing in nvim
+## 11. Running shell commands while editing in nvim
 
 Common question: **"I'm in nvim and want to build/run this file — pane or window?"**
 
@@ -424,7 +522,7 @@ You started with a pane and want a window instead (or vice versa):
 
 ---
 
-## 11. Troubleshooting
+## 12. Troubleshooting
 
 | Problem | Fix |
 |---|---|
@@ -438,7 +536,7 @@ You started with a pane and want a window instead (or vice versa):
 
 ---
 
-## 12. Sanity checks
+## 13. Sanity checks
 
 ```sh
 tmux source-file ~/.config/tmux/tmux.conf   # or <L> r inside tmux
