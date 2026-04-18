@@ -69,12 +69,12 @@ end
 
 -- F8: compile + run, stdin from ./inp
 map("<F8>",
-  "g++ " .. PCH_FLAG .. " -fsanitize=address -std=c++17 -DONPC -O2 -o %:t:r %:t && ./%:t:r < inp")
+  "g++ " .. PCH_FLAG .. " -fsanitize=address -std=c++20 -DONPC -O2 -o %:t:r %:t && ./%:t:r < inp")
 
 -- F9: compile + run (no stdin), with -Wall -Wextra -Wshadow
 map("<F9>",
-  "g++ " .. PCH_FLAG .. " -fsanitize=address -std=c++17 -Wall -Wextra -Wshadow -DONPC -O2 -o %:t:r %:t && ./%:t:r")
+  "g++ " .. PCH_FLAG .. " -fsanitize=address -std=c++20 -Wall -Wextra -Wshadow -DONPC -O2 -o %:t:r %:t && ./%:t:r")
 
 -- F10: compile + run with stdin from ./inp, with full warnings
 map("<F10>",
-  "g++ " .. PCH_FLAG .. " -fsanitize=address -std=c++17 -Wall -Wextra -Wshadow -DONPC -O2 -o %:t:r %:t && ./%:t:r < inp")
+  "g++ " .. PCH_FLAG .. " -fsanitize=address -std=c++20 -Wall -Wextra -Wshadow -DONPC -O2 -o %:t:r %:t && ./%:t:r < inp")

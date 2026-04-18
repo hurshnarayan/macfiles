@@ -47,4 +47,17 @@ require("catppuccin").setup({
       enabled = true,
     },
   },
+
+  custom_highlights = function(colors)
+    return {
+      Comment              = { fg = colors.overlay2, bg = "NONE", style = { "italic" } },
+      ["@comment"]         = { fg = colors.overlay2, bg = "NONE" },
+      ["@comment.lua"]     = { bg = "NONE" },
+      ["@comment.line"]    = { bg = "NONE" },
+      ["@comment.block"]   = { bg = "NONE" },
+      ["@comment.documentation"] = { bg = "NONE" },
+      ["@spell"]           = { bg = "NONE" },
+      ["@nospell"]         = { bg = "NONE" },
+    }
+  end,
 })
