@@ -49,8 +49,14 @@ if ! tmux has-session -t="$selected_name" 2> /dev/null; then
     tmux new-session -ds "$selected_name" -c "$selected"
 fi
 
-tmux switch-client -t "$selected_name"
+if [[ -z $TMUX ]]; then
+    tmux attach -t "$selected_name"
+else
+    tmux switch-client -t "$selected_name"
+fi
 ```
+
+> **Note:** Prime's original script ends with an unconditional `tmux switch-client -t …`. That breaks the "outside tmux, server still running" case (e.g. you detached with `<L> d` and then hit `Ctrl+F` from the bare shell) — `switch-client` only works from an *attached* client, so it errors with `no current client`. The branch above fixes that: `attach` when outside tmux, `switch-client` when inside.
 
 ### What each block does
 
@@ -61,7 +67,7 @@ tmux switch-client -t "$selected_name"
 | `basename ... \| tr . _` | Turn `my.project` into `my_project` — tmux session names can't contain dots. |
 | `[[ -z $TMUX ]] && [[ -z $tmux_running ]]` | "No tmux running anywhere": create + attach a fresh session. |
 | `! tmux has-session ...` | "Tmux running but session for this project doesn't exist yet": create it detached. |
-| `tmux switch-client` | Switch the current tmux client to that session. |
+| `[[ -z $TMUX ]] && tmux attach` / `else tmux switch-client` | Attach if you're at a bare shell; switch if you're already inside tmux. |
 
 ---
 
@@ -146,13 +152,14 @@ Muscle memory: `Ctrl+F` from anywhere; `prefix + f` when your hand is already on
 
 ## 5. The State Machine
 
-The script handles three situations:
+The script handles four situations:
 
 | Situation | What happens |
 |---|---|
-| **No tmux running** | Creates a session and **attaches** you to it. Fresh shell prompt sitting in the project's directory. |
-| **Tmux running, session for this project doesn't exist yet** | Creates the session **detached**, then `switch-client`s you into it. |
-| **Tmux running, session for this project already exists** | Just `switch-client`s — drops you back into your existing workspace, exactly as you left it. |
+| **No tmux server running** | Creates a session and **attaches** you to it. Fresh shell prompt sitting in the project's directory. |
+| **Server running, you're inside tmux, session doesn't exist yet** | Creates the session **detached**, then `switch-client`s you into it. |
+| **Server running, you're inside tmux, session already exists** | Just `switch-client`s — drops you back into your existing workspace, exactly as you left it. |
+| **Server running, you're OUTSIDE tmux** (e.g. just detached with `<L> d`) | `tmux attach -t <session>` — re-attaches you. Creates the session first if it doesn't exist. This is the case Prime's original script gets wrong (it calls `switch-client` with no attached client → "no current client" error). |
 
 ### "Is the session empty when first created?"
 
