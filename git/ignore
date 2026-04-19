@@ -1,1 +1,22 @@
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+.AppleDouble
+.fseventsd
+
+# Editor swap & backup files
+*.swp
+*.swo
+*.swn
+*~
+.*.sw?
+
+# Merge conflict & patch artifacts
+*.orig
+*.rej
+*.bak
+
+# Claude Code
 **/.claude/settings.local.json
