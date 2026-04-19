@@ -8,6 +8,18 @@
 !tmux/
 !tmux/**
 
+!ghostty/
+!ghostty/**
+
+!fish/
+!fish/**
+
+!scripts/
+!scripts/**
+
+!git/
+!git/**
+
 
 # Track these files
 !.gitignore
