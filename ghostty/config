@@ -1,0 +1,49 @@
+# By default Reload config with shft + cmd + ,
+
+# toggle_quick_terminal
+keybind = global:cmd+backquote=toggle_quick_terminal
+
+# themes
+theme = Vague
+
+#window
+# fullscreen = true
+# macos-non-native-fullscreen = visible-menu
+window-width = 9999
+window-height = 9999
+
+
+font-family = JetBrainsMonoNL Nerd Font
+font-size = 25
+cursor-style = block
+cursor-style-blink = false
+cursor-invert-fg-bg = true
+
+macos-titlebar-style = hidden
+macos-option-as-alt = true
+mouse-hide-while-typing = true
+
+confirm-close-surface = true 
+window-decoration = true
+window-padding-x = 8
+window-padding-y = 8
+window-padding-balance = true
+
+auto-update = check
+auto-update-channel = stable
+
+# extras
+shell-integration-features = no-cursor
+copy-on-select = clipboard
+
+# Custom Keybinds & Config (super represents cmd key on mac)
+# For Simple Keybinds
+# keybind = super+r=reload_config
+keybind = super+i=inspector:toggle
+keybind = super+b>,=toggle_quick_terminal
+
+# Kill tab creation — titlebar is hidden, so tabs would spawn invisibly
+keybind = cmd+t=unbind
+keybind = cmd+shift+t=unbind
+keybind = cmd+shift+]=unbind
+keybind = cmd+shift+[=unbind
