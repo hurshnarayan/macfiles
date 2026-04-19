@@ -20,6 +20,9 @@
 !git/
 !git/**
 
+!aerospace/
+!aerospace/**
+
 
 # Track these files
 !.gitignore
