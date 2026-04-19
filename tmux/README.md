@@ -211,27 +211,42 @@ server
 
 These are `-r` (**repeatable**) — after one `<L>`, you can keep tapping `h/j/k/l` (or `^`) without re-pressing the prefix.
 
+### UI
+| Keys | Action |
+|---|---|
+| `<L> b` | Toggle the status bar on/off |
+
+Status bar is at the **top** (sylvan-style), minimal: session name on the left, window list centered, nothing on the right. `renumber-windows on` so closing a window doesn't leave gaps.
+
 ### Workflow shortcuts
 | Keys | Action |
 |---|---|
-| `<L> f` | Run `~/.local/bin/tmux-sessionizer` in a new window (fuzzy jump into projects) |
-| `<L> i` | Run `tmux-cht.sh` — cheat.sh lookup |
-| `<L> D` | Open `TODO.md` in nvim (local `TODO.md` if present, else `~/.dotfiles/personal/todo.md`) |
+| `<L> f` | Run `~/.config/scripts/tmux-sessionizer` in a new window (fuzzy jump into projects). Also bound to `Ctrl+F` at the fish shell level. |
+| `<L> p` | Fuzzy-pick a PDF/epub/djvu from `~/Documents` and open it in sioyek in a detached window. |
+| `<L> D` | Open `TODO.md` in nvim (local `TODO.md` if present, else `~/.dotfiles/personal/todo.md`). |
 
 ### Project jumps (tmux-sessionizer shortcuts)
-Each opens the given path as a tmux session:
 
-| Keys | Path |
-|---|---|
-| `<L> G` | `~/work/nrdp` |
-| `<L> C` | `~/work/tvui` |
-| `<L> R` | `~/work/milo` |
-| `<L> H` | `~/personal/vim-with-me` |
-| `<L> T` | `~/personal/refactoring.nvim` |
-| `<L> N` | `~/personal/harpoon` |
-| `<L> S` | `~/personal/developer-productivity` |
+**Currently commented out in `tmux.conf`.** The pattern is one keystroke to create-or-attach a session rooted at a specific directory. Two reference blocks are in the config, both commented: primeagen's (his dirs) and sylvan's (his dirs). Pick a letter, pick your dir, uncomment the line.
 
-> These need the `tmux-sessionizer` script at `~/.local/bin/tmux-sessionizer`. Grab it from <https://github.com/ThePrimeagen/.dotfiles> (`bin/.local/bin/tmux-sessionizer`). `<L> i` similarly needs `tmux-cht.sh` on `$PATH`. Edit the paths in `tmux.conf` to match **your** projects — those defaults are Prime's.
+Template:
+```tmux
+bind-key -r <LETTER> run-shell "~/.config/scripts/tmux-sessionizer <PATH>"
+```
+
+Examples from the config (commented):
+```tmux
+# Primeagen-style
+# bind-key -r G run-shell "~/.config/scripts/tmux-sessionizer ~/work/nrdp"
+# bind-key -r S run-shell "~/.config/scripts/tmux-sessionizer ~/personal/developer-productivity"
+
+# Sylvan-style
+# bind-key -r N run-shell "~/.config/scripts/tmux-sessionizer ~/documents/notes"
+# bind-key -r P run-shell "~/.config/scripts/tmux-sessionizer ~/documents/projects"
+# bind-key -r H run-shell "~/.config/scripts/tmux-sessionizer ~"
+```
+
+Avoid collisions: `<L> h/j/k/l` are pane nav, `<L> D` is TODO, `<L> f` is the fuzzy picker, `<L> p` is the PDF picker. Pick unused letters (G, C, R, T, N, P, S, H are typical).
 
 ---
 
@@ -394,9 +409,11 @@ Or inside tmux: `<L> :` then `kill-server`.
 
 ---
 
-## 9. Companion files: `.tmux-cht-*`
+## 9. Optional: `tmux-cht.sh` (cheat.sh lookup)
 
-Bound to `<L> i` via Primeagen's `tmux-cht.sh` script (cheat.sh lookup helper). The script reads two files from `$HOME`:
+Not bound by default on this machine. Primeagen binds `<L> i` to his `tmux-cht.sh` script; the line is **commented out** in `tmux.conf`. Uncomment if you want it.
+
+The script reads two files from `$HOME`:
 
 | File | Contents |
 |---|---|
@@ -405,12 +422,10 @@ Bound to `<L> i` via Primeagen's `tmux-cht.sh` script (cheat.sh lookup helper). 
 
 **How it works:** `tmux-cht.sh` shows both lists via `fzf`, then `curl`s `cheat.sh/…` with your query and pipes it into `less`.
 
-**Install (if you want `<L> i` to work):**
-```sh
-cp ~/.config/tmux_primeagen/.tmux-cht-* ~/
-# then get tmux-cht.sh from https://github.com/ThePrimeagen/.dotfiles
-# (bin/.local/bin/tmux-cht.sh) and put it on $PATH, chmod +x
-```
+**To enable:**
+1. Grab `tmux-cht.sh` from <https://github.com/ThePrimeagen/.dotfiles> (`bin/.local/bin/tmux-cht.sh`), put on `$PATH`, `chmod +x`.
+2. Create `~/.tmux-cht-languages` and `~/.tmux-cht-command` with one entry per line.
+3. Uncomment the line in `tmux.conf`: `bind-key -r i run-shell "tmux neww tmux-cht.sh"`.
 
 ---
 
@@ -528,8 +543,9 @@ You started with a pane and want a window instead (or vice versa):
 |---|---|
 | `<L>` doesn't do anything | You're not in tmux, or the config didn't load. Check with `tmux show -g prefix` (should print `prefix C-a`). |
 | Colors look washed out | Your terminal must support truecolor. iTerm2 / Ghostty / Alacritty / WezTerm all do. |
-| `<L> f` says "command not found" | Install `tmux-sessionizer` to `~/.local/bin/` and `chmod +x` it. |
-| `<L> i` says "command not found" | Same — install `tmux-cht.sh` on `$PATH`, plus the `.tmux-cht-*` files in `$HOME`. |
+| `<L> f` says "command not found" | Confirm `~/.config/scripts/tmux-sessionizer` exists and is executable (`chmod +x`). |
+| `<L> p` opens nothing / sioyek not found | Install sioyek (`brew install sioyek`). Script is at `~/.config/scripts/open-pdf.sh`. |
+| `<L> i` says "command not found" | It's commented out in tmux.conf. Uncomment + install `tmux-cht.sh` (see §9). |
 | Forgot a keybind | `<L> ?` lists all of them. `q` to exit. |
 | Window number keys don't work | It's `<L> 2` (prefix then number), **not** `<L> a 2` or `<L> Ctrl+a 2`. |
 | Want to kill an unattached session fast | `<L> w` → arrow to it → `x`. |
