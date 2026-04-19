@@ -1,0 +1,10 @@
+# This file contains fish universal variable definitions.
+# VERSION: 3.0
+SETUVAR --export ANDROID_HOME:/Users/harshnarayan/Library/Android/sdk
+SETUVAR --export ANDROID_SDK_ROOT:/Users/harshnarayan/Library/Android/sdk
+SETUVAR --export JAVA_HOME:/Library/Java/JavaVirtualMachines/temurin\x2d25\x2ejdk/Contents/Home
+SETUVAR __fish_initialized:4300
+SETUVAR _fisher_oh_2D_my_2D_fish_2F_plugin_2D_peco_files:\x7e/\x2econfig/fish/functions/peco_select_history\x2efish
+SETUVAR _fisher_plugins:oh\x2dmy\x2dfish/plugin\x2dpeco
+SETUVAR _fisher_upgraded_to_4_4:\x1d
+SETUVAR fish_user_paths:/Users/harshnarayan/Library/Android/sdk/cmdline\x2dtools/latest/bin\x1e/opt/homebrew/bin\x1e/opt/homebrew/opt/postgresql\x4018/bin
