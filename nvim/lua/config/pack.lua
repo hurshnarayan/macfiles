@@ -127,6 +127,8 @@ vim.pack.add({
   -- CPP COMPETITIVE PROGRAMMING
   -- Jellybeans colorscheme (matches MacVim setup)
   "https://github.com/nanotech/jellybeans.vim",
+  -- Vague colorscheme (sylvan's theme — muted earthy palette, matches ghostty)
+  "https://github.com/vague2k/vague.nvim",
   -- UltiSnips: snippet engine used by the pastebin cpp.snippets file
   -- (requires pynvim: pip3 install --user --break-system-packages pynvim)
   "https://github.com/sirver/ultisnips",

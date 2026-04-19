@@ -2,9 +2,10 @@
 -- colorscheme.lua  (Theme)
 -- =============================================================================
 --
--- Default: jellybeans (MacVim-style warm dark theme).
+-- Default: vague (sylvan's theme — muted earthy palette, matches ghostty).
 --
 -- TO SWITCH THEMES (at runtime):
+--   :colorscheme vague
 --   :colorscheme catppuccin-mocha
 --   :colorscheme jellybeans
 --   :FzfLua colorschemes     <- browse all
@@ -28,10 +29,17 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       "@comment.documentation",
       "@spell",
       "@nospell",
+      -- Kill Vague's block-background on string literals
+      "String",
+      "@string",
+      "@string.documentation",
+      "@string.escape",
+      "@string.special",
+      "@string.regexp",
     }) do
       vim.cmd("highlight " .. grp .. " guibg=NONE ctermbg=NONE")
     end
   end,
 })
 
-vim.cmd.colorscheme("jellybeans")
+vim.cmd.colorscheme("vague")
