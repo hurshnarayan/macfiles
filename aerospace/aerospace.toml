@@ -13,22 +13,26 @@ default-root-container-orientation = 'auto'
 persistent-workspaces = ['GHOSTTY', 'BROWSER', 'FINDER', 'DISCORD', 'MSG', 'NOTION', 'MAIL', 'SAFARI', 'SIOYEK', 'DAVINCI']
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
+# Launch JankyBorders when aerospace starts so the focused window has a visible outline.
+after-startup-command = ['exec-and-forget borders']
+
 [key-mapping]
 preset = 'qwerty'
 
 [gaps]
-inner.horizontal = 0
-inner.vertical = 0
-outer.left = 0
-outer.bottom = 0
-outer.top = 0
-outer.right = 0
+inner.horizontal = 6
+inner.vertical = 6
+outer.left = 6
+outer.bottom = 6
+outer.top = 6
+outer.right = 6
 
 [mode.main.binding]
 # Layout and recovery
 alt-slash = 'layout tiles horizontal vertical'
 alt-comma = 'layout tiles horizontal horizontal'
 alt-space = 'layout floating tiling'
+alt-shift-f = 'fullscreen'
 alt-backtick = 'flatten-workspace-tree'
 alt-equal = 'balance-sizes'
 alt-semicolon = 'mode service'

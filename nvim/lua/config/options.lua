@@ -50,10 +50,14 @@ opt.smartcase = true
 opt.expandtab = true
 
 -- How many spaces each indentation level uses (>> and << commands)
-opt.shiftwidth = 2
+opt.shiftwidth = 4
 
 -- How many spaces a Tab key press inserts
-opt.tabstop = 2
+opt.tabstop = 4
+
+-- How many spaces Tab/Backspace acts like in insert mode.
+-- With this set, Backspace deletes a full indent level in one press.
+opt.softtabstop = 4
 
 -- Copy indentation from the line above when starting a new line
 opt.autoindent = true

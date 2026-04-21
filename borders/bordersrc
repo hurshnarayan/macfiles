@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# JankyBorders config — draws a border around the focused window
+# so you can actually tell what aerospace has focused.
+
+options=(
+    style=round
+    width=5.0
+    hidpi=on
+    active_color=0xffffffff     # white
+    inactive_color=0x00000000   # transparent — unfocused windows have no border
+)
+
+borders "${options[@]}"

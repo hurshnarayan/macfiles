@@ -1,7 +1,8 @@
 # By default Reload config with shft + cmd + ,
 
 # toggle_quick_terminal
-keybind = global:cmd+backquote=toggle_quick_terminal
+# commented cuz i never use quick terminal
+# keybind = global:cmd+backquote=toggle_quick_terminal
 
 # themes
 theme = Vague
@@ -23,7 +24,7 @@ macos-titlebar-style = hidden
 macos-option-as-alt = true
 mouse-hide-while-typing = true
 
-confirm-close-surface = true 
+confirm-close-surface = true
 window-decoration = true
 window-padding-x = 8
 window-padding-y = 8

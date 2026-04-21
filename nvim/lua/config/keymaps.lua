@@ -150,12 +150,18 @@ keymap({ "n" }, "<s-l>", "<cmd>tabn<cr>", opts)
 -- =============================================================================
 -- MOVE LINES UP / DOWN
 -- =============================================================================
--- Alt+j / Alt+k moves the current line (or selected lines) up/down.
--- Works in Normal, Insert, and Visual mode.
-keymap("n", "<leader>j", "<cmd>m .+1<CR>==", { desc = "Move line down" })
-keymap("n", "<leader>k", "<cmd>m .-2<CR>==", { desc = "Move line up" })
-keymap("v", "<leader>j", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
-keymap("v", "<leader>k", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
+-- Primary: Alt+Down / Alt+Up moves the current line (or selected lines) (hold to repeat).
+-- Backup: <leader>j / <leader>k.
+-- Works in Normal and Visual mode.
+keymap("n", "<M-Down>", "<cmd>m .+1<CR>==", { desc = "Move line down" })
+keymap("n", "<M-Up>", "<cmd>m .-2<CR>==", { desc = "Move line up" })
+keymap("v", "<M-Down>", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
+keymap("v", "<M-Up>", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
+
+keymap("n", "<leader>j", "<cmd>m .+1<CR>==", { desc = "Move line down (backup)" })
+keymap("n", "<leader>k", "<cmd>m .-2<CR>==", { desc = "Move line up (backup)" })
+keymap("v", "<leader>j", ":m '>+1<CR>gv=gv", { desc = "Move selection down (backup)" })
+keymap("v", "<leader>k", ":m '<-2<CR>gv=gv", { desc = "Move selection up (backup)" })
 
 
 -- =============================================================================

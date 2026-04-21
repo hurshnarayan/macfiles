@@ -70,6 +70,9 @@ vim.pack.add({
   "https://github.com/williamboman/mason.nvim",
   -- Auto-install a list of tools via Mason
   "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim",
+  -- Default LSP configs (cmd, filetypes, root_markers) for ~350 servers.
+  -- Your lsp/<name>.lua files override these when present.
+  "https://github.com/neovim/nvim-lspconfig",
   -- Bridge between Mason and Neovim's built-in LSP
   "https://github.com/mason-org/mason-lspconfig.nvim",
 
