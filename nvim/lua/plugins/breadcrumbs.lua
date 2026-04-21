@@ -35,3 +35,33 @@ require("nvim-navic").setup({
 })
 
 require("breadcrumbs").setup()
+
+-- Swap the modified-buffer glyph in the winbar from the nerd-font  (which
+-- renders as a blob) to a plain ●, keeping the existing layout and position.
+local bc = require("breadcrumbs")
+local bc_utils = require("breadcrumbs.utils")
+
+bc.get_winbar = function()
+  if vim.tbl_contains(bc.winbar_filetype_exclude or {}, vim.bo.filetype) then
+    return
+  end
+
+  local value = bc.get_filename()
+  if bc_utils.isempty(value) then
+    return
+  end
+
+  local ok, navic = pcall(require, "nvim-navic")
+  if ok then
+    local loc_ok, loc = pcall(navic.get_location, {})
+    if loc_ok and navic.is_available() and not bc_utils.isempty(loc) and loc ~= "error" then
+      value = value .. " %#NavicSeparator#\239\145\160%* " .. loc
+    end
+  end
+
+  if bc_utils.get_buf_option("mod") then
+    value = value .. " %#DiagnosticWarn#●%*"
+  end
+
+  pcall(vim.api.nvim_set_option_value, "winbar", value, { scope = "local" })
+end
