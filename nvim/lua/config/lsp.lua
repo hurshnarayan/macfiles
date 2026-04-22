@@ -102,8 +102,10 @@ vim.diagnostic.config({
   },
 
   -- virtual_text shows error messages inline after each line.
-  -- Set to false if you find them too noisy (then use gl to check manually).
-  virtual_text = false,
+  -- current_line = true only shows it on the cursor's line (less noisy).
+  -- source = true prefixes the message with the tool that produced it
+  -- (e.g. "syntax: ...", "typecheck: ...", "golangcilint: ...").
+  virtual_text = { current_line = true, source = true },
 
   -- virtual_lines draws the diagnostic BELOW the line. Also disabled.
   virtual_lines = false,
@@ -112,10 +114,14 @@ vim.diagnostic.config({
   -- These are Nerd Font icons for Error, Warn, Hint, Info.
   signs = {
     text = {
-      [vim.diagnostic.severity.ERROR] = " ",
-      [vim.diagnostic.severity.WARN] = " ",
-      [vim.diagnostic.severity.HINT] = " ",
-      [vim.diagnostic.severity.INFO] = " ",
+      -- Nerd Font glyphs (requires a Nerd Font in your terminal):
+      --   \u{F057} = circle-xmark,   \u{F071} = triangle-warning,
+      --   \u{F400} = lightbulb,      \u{F05A} = info-circle.
+      -- If you don't have Nerd Fonts, swap to: "E", "W", "H", "I".
+      [vim.diagnostic.severity.ERROR] = "\u{F057}",
+      [vim.diagnostic.severity.WARN]  = "\u{F071}",
+      [vim.diagnostic.severity.HINT]  = "\u{F400}",
+      [vim.diagnostic.severity.INFO]  = "\u{F05A}",
     },
   },
 

@@ -1,0 +1,21 @@
+-- =============================================================================
+-- nvim-surround.lua  (Add/Change/Delete Surrounding Pairs)
+-- =============================================================================
+--
+-- Quick reference (normal mode):
+--   ysiw"       surround inner word with "
+--   ysiw'       surround inner word with '
+--   yss)        surround the whole line with ( )  (no space)
+--   yss(        surround the whole line with ( )  (WITH space)
+--   ys$)        surround from cursor to end of line
+--   cs"'        change surrounding " to '
+--   cs'<q>      change surrounding ' to <q></q>
+--   ds"         delete surrounding "
+--
+-- Visual mode:
+--   S"          wrap the visual selection in "
+--
+-- Opening vs closing bracket: ')' = tight,  '(' = adds spaces inside.
+-- =============================================================================
+
+require("nvim-surround").setup({})

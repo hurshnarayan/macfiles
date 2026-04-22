@@ -84,6 +84,8 @@ vim.pack.add({
   "https://github.com/folke/ts-comments.nvim",
   -- Auto-close brackets, quotes, parentheses
   "https://github.com/windwp/nvim-autopairs",
+  -- Add/change/delete surrounding quotes, brackets, tags (ysiw", cs"', ds")
+  "https://github.com/kylechui/nvim-surround",
   -- Smooth scrolling animations
   { src = "https://github.com/karb94/neoscroll.nvim", version = "e786577" },
   -- Highlight unique characters on f/F/t/T motions for quick jumping

@@ -41,6 +41,16 @@ lint.linters_by_ft = {
   sh = { "shellcheck" },
   bash = { "shellcheck" },
   zsh = { "shellcheck" },
+
+  -- Go: golangci-lint runs a suite of Go linters (govet, staticcheck, etc.)
+  -- Augments gopls with style / bug checks gopls doesn't cover.
+  go = { "golangcilint" },
+
+  -- Dockerfile: hadolint checks for best practices and common mistakes
+  dockerfile = { "hadolint" },
+
+  -- Markdown: markdownlint-cli2 checks for style issues and broken references
+  markdown = { "markdownlint-cli2" },
 }
 
 -- Auto-run linters on these events
