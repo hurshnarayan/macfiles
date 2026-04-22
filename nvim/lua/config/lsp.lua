@@ -14,7 +14,9 @@
 -- HOW IT WORKS:
 --   1. Mason (the plugin) INSTALLS language servers (e.g. clangd for C++)
 --   2. vim.lsp.enable() STARTS them when you open a matching file
---   3. vim.lsp.config() sets capabilities (what features to request)
+--   3. vim.lsp.config() sets capabilities (what features to request) or
+--   make a custom config inside lsp dir like (clangd.lua this is given priority) over
+--   nvim-lspconfig that comes with default configs pre-installed
 --   4. Keybindings are set up in the LspAttach autocmd below
 --
 -- ADDING A NEW LANGUAGE:

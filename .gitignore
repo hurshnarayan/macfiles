@@ -26,6 +26,9 @@
 !borders/
 !borders/**
 
+!sioyek/
+!sioyek/**
+
 
 # Track these files
 !.gitignore
