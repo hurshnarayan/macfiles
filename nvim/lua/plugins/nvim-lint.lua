@@ -44,7 +44,10 @@ lint.linters_by_ft = {
 
   -- Go: golangci-lint runs a suite of Go linters (govet, staticcheck, etc.)
   -- Augments gopls with style / bug checks gopls doesn't cover.
-  go = { "golangcilint" },
+  -- i have it commented cuz two linters are annoying, it flags too many things,
+  -- the linter (gopls) official lang server of go does the job
+
+  -- go = { "golangcilint" },
 
   -- Dockerfile: hadolint checks for best practices and common mistakes
   dockerfile = { "hadolint" },
