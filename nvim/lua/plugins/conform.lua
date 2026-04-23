@@ -72,6 +72,12 @@ conform.setup({
     lsp_format = "fallback",
   },
 
+  -- Run the configured formatters on every :w
+  format_on_save = {
+    lsp_format = "fallback",
+    timeout_ms = 1000,
+  },
+
   -- Per-formatter settings
   formatters = {
     shfmt = {
