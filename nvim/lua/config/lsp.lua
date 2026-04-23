@@ -105,7 +105,7 @@ vim.diagnostic.config({
   -- current_line = true only shows it on the cursor's line (less noisy).
   -- source = true prefixes the message with the tool that produced it
   -- (e.g. "syntax: ...", "typecheck: ...", "golangcilint: ...").
-  virtual_text = { current_line = true, source = true },
+  virtual_text = { source = true },
 
   -- virtual_lines draws the diagnostic BELOW the line. Also disabled.
   virtual_lines = false,
