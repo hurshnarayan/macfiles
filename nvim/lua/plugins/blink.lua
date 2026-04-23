@@ -57,11 +57,11 @@ require("blink.cmp").setup({
 
   -- Completion behavior
   completion = {
-    -- Don't auto-show documentation (press Ctrl+Space to toggle)
-    documentation = { auto_show = false },
+    -- Auto-show the documentation panel next to the menu (signature + description)
+    documentation = { auto_show = true, auto_show_delay_ms = 200 },
     list = {
-      -- Don't preselect or auto-insert: you must explicitly choose
-      selection = { preselect = false, auto_insert = false },
+      -- Preselect the top match so <CR> accepts it without navigating first
+      selection = { preselect = true, auto_insert = false },
     },
   },
 
